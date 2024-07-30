@@ -1,6 +1,5 @@
 import getCurrentUser from "@/app/actions/getCurrentUser";
-import Button from "@/app/components/Buttons/Button";
-import SignOutBtn from "@/app/components/SignOutBtn";
+import Profile from "@/app/components/Pages/Profile";
 import React from "react";
 
 const page = async () => {
@@ -10,7 +9,7 @@ const page = async () => {
 	return (
 		<div>
 			{/*   SHOW PROFILE PAGE */}
-			<Button text={"Hello"} />
+			<Profile currentUser={currentUser} />
 		</div>
 	);
 };
