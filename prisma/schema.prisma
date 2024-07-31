@@ -16,3 +16,23 @@ model User {
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 }
+
+model Quiz {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  questions   Question[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Question {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  quizId          String   @db.ObjectId
+  quiz            Quiz     @relation(fields: [quizId], references: [id])
+  questionText    String
+  answer          String
+  answerChoices   String[]
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
