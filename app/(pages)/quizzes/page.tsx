@@ -8,7 +8,7 @@ const page = async () => {
 	return (
 		<div>
 			<br />
-			<Quizzes />
+			<Quizzes quizzes={quizzes} />
 		</div>
 	);
 };

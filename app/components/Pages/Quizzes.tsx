@@ -1,8 +1,10 @@
 import React from "react";
 import GridCard from "../GridCard";
 
-const Quizzes = () => {
-	const cards = [
+const Quizzes = ({ quizzes }: any) => {
+	const cards = quizzes;
+	/* 
+	[
 		{
 			title: "Medical Prefixes",
 			cards: 4,
@@ -19,10 +21,10 @@ const Quizzes = () => {
 			author: "Lorem Ipsum",
 		},
 	];
-
+ */
 	return (
 		<div className="grid grid-cols-3 w-[90%] mx-auto gap-4">
-			{cards.map((card) => (
+			{cards.map((card: any) => (
 				<GridCard card={card} />
 			))}
 		</div>
