@@ -15,6 +15,8 @@ export default async function getQuizzes() {
 			},
 		});
 
+		console.log(quizzes);
+
 		if (!quizzes) {
 			return null;
 		}

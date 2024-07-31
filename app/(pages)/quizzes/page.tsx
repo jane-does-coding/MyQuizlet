@@ -5,6 +5,9 @@ import React from "react";
 const page = async () => {
 	const quizzes = await getQuizzes();
 	console.log(quizzes);
+
+	if (!quizzes) return null;
+
 	return (
 		<div>
 			<br />
