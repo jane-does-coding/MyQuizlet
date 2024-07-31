@@ -18,19 +18,19 @@ const CreateQuiz = () => {
 		]);
 	};
 
-	const handleQuestionChange = (index, field, value) => {
-		const newQuestions = [...questions];
+	const handleQuestionChange = (index: any, field: any, value: any) => {
+		const newQuestions: any = [...questions];
 		newQuestions[index][field] = value;
 		setQuestions(newQuestions);
 	};
 
-	const handleAnswerChoiceChange = (qIndex, cIndex, value) => {
+	const handleAnswerChoiceChange = (qIndex: any, cIndex: any, value: any) => {
 		const newQuestions = [...questions];
 		newQuestions[qIndex].answerChoices[cIndex] = value;
 		setQuestions(newQuestions);
 	};
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = async (e: any) => {
 		e.preventDefault();
 		const response = await fetch("/api/create-quiz", {
 			method: "POST",
@@ -47,8 +47,8 @@ const CreateQuiz = () => {
 	};
 
 	return (
-		<div className="w-screen h-screen flex items-center justify-center">
-			<div className="w-full md:w-[50vw] h-auto bg-zinc-800 rounded-xl">
+		<div className="w-screen min-h-screen flex items-center justify-center">
+			<div className="w-full md:w-[50vw] h-auto bg-zinc-800 rounded-xl mt-[2rem] mb-[2rem]">
 				<h1 className="mx-auto text-white text-center flex items-center justify-center text-[2rem] mt-6 mb-6">
 					<img
 						src="/avatar.png"
@@ -59,7 +59,7 @@ const CreateQuiz = () => {
 				</h1>
 				<div className="w-full border-t-2 border-zinc-900 mb-auto">
 					<form onSubmit={handleSubmit}>
-						<div className="flex items-center pb-4 pt-4 w-[90%] mx-auto gap-6">
+						<div className="flex flex-col items-center pb-4 pt-4 w-[90%] mx-auto gap-6">
 							<label htmlFor="title" className="text-neutral-400">
 								Title
 							</label>
@@ -73,7 +73,7 @@ const CreateQuiz = () => {
 								required
 							/>
 						</div>
-						<div className="flex items-center pb-4 pt-4 w-[90%] mx-auto gap-6">
+						<div className="flex flex-col items-center pb-4 pt-4 w-[90%] mx-auto gap-6">
 							<label htmlFor="description" className="text-neutral-400">
 								Description
 							</label>
@@ -87,11 +87,11 @@ const CreateQuiz = () => {
 							></textarea>
 						</div>
 						{questions.map((question, qIndex) => (
-							<div key={qIndex} className="border-t-2 border-zinc-900">
+							<div key={qIndex} className="border-t-4 border-zinc-900 py-4">
 								<div className="flex items-center pb-4 pt-4 w-[90%] mx-auto gap-6">
 									<label
 										htmlFor={`question-${qIndex}`}
-										className="text-neutral-400"
+										className="text-neutral-400 flex items-center justify-center text-nowrap"
 									>
 										Question {qIndex + 1}
 									</label>
@@ -137,7 +137,7 @@ const CreateQuiz = () => {
 									>
 										<label
 											htmlFor={`choice-${qIndex}-${cIndex}`}
-											className="text-neutral-400"
+											className="text-neutral-400 flex items-center justify-center text-nowrap"
 										>
 											Choice {cIndex + 1}
 										</label>
@@ -156,7 +156,7 @@ const CreateQuiz = () => {
 								))}
 							</div>
 						))}
-						<div className="flex gap-4 w-[90%] mx-auto mt-auto">
+						<div className="flex gap-4 w-[90%] mx-auto mt-auto mb-[1.5rem]">
 							<button
 								type="button"
 								onClick={addQuestion}

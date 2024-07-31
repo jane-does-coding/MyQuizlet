@@ -1,7 +1,7 @@
 import prisma from "@/app/libs/prismadb";
 import { NextResponse } from "next/server";
 
-export async function POST(req) {
+export async function POST(req: any) {
 	const body = await req.json();
 	const { title, description, questions } = body;
 
@@ -11,7 +11,7 @@ export async function POST(req) {
 				title,
 				description,
 				questions: {
-					create: questions.map((q) => ({
+					create: questions.map((q: any) => ({
 						questionText: q.questionText,
 						answer: q.answer,
 						answerChoices: q.answerChoices,
