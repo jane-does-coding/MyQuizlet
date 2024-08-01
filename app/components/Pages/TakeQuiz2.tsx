@@ -1,17 +1,17 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import AnimatedTextWord from "../AnimatedTextWord";
 import { motion, useAnimation } from "framer-motion";
-import { IoIosArrowBack } from "react-icons/io";
-import { IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import AnimatedTextWord from "../AnimatedTextWord";
 import { Progress } from "@/components/ui/progress";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 
 interface Question {
+	[x: string]: any;
 	question: string;
-	answerChoices: string[];
+	choices: string[];
 	correctAnswer: string;
 }
 
@@ -29,11 +29,11 @@ const createShuffledQuestions = (data: any): Question[] => {
 
 	return shuffledQuestions.map((question: any) => ({
 		...question,
-		answerChoices: shuffleArray(question.answerChoices),
+		choices: shuffleArray(question.answerChoices),
 	}));
 };
 
-const Quiz = ({
+const TakeQuiz2 = ({
 	questions: QuestionsArray,
 	title,
 }: {
@@ -48,8 +48,9 @@ const Quiz = ({
 	const [timerMinutes, setTimerMinutes] = useState(0);
 	const [timeLeft, setTimeLeft] = useState(0);
 	const [isFading, setIsFading] = useState(false);
+	const [showAnswers, setShowAnswers] = useState(false);
 
-	const [questions, setQuestions]: any = useState(
+	const [questions, setQuestions] = useState<Question[]>(
 		createShuffledQuestions(QuestionsArray)
 	);
 
@@ -117,7 +118,7 @@ const Quiz = ({
 	const handleSubmit = () => {
 		let calculatedScore = 0;
 		selectedAnswers.forEach((answer, index) => {
-			if (answer === questions[index].answer) {
+			if (answer === questions[index].correctAnswer) {
 				calculatedScore += 1;
 			}
 		});
@@ -146,6 +147,7 @@ const Quiz = ({
 	const handleRestartQuiz = () => {
 		setIsSubmitted(false);
 		setIsQuizStarted(false);
+		setShowAnswers(false);
 		setCurrentQuestionIndex(0);
 		setSelectedAnswers([]);
 		setScore(0);
@@ -154,24 +156,53 @@ const Quiz = ({
 
 	const router = useRouter();
 
+	const QuestionResult = ({
+		question,
+		userAnswer,
+		correctAnswer,
+	}: {
+		question: any;
+		userAnswer: any;
+		correctAnswer: any;
+	}) => {
+		const isCorrect = userAnswer === correctAnswer;
+		return (
+			<div className="w-full mb-4 p-4 bg-zinc-700 rounded-md text-neutral-200">
+				<h3 className="text-[1.25rem]">{question}</h3>
+				<p
+					className={`text-[1rem] ${
+						isCorrect ? "text-neutral-100" : "text-neutral-100"
+					}`}
+				>
+					Your answer: {userAnswer}
+				</p>
+				{!isCorrect && (
+					<p className="text-[1rem] text-yellow-200">
+						Correct answer: {correctAnswer}
+					</p>
+				)}
+			</div>
+		);
+	};
+
 	if (!isQuizStarted) {
 		return (
-			<div className="w-[100vw] h-screen flex items-center justify-center">
+			<div className="w-[100vw] min-h-screen flex items-center justify-center">
 				<div className="w-[45vw] min-h-[60vh] bg-zinc-800 mx-auto rounded-[1rem] flex flex-col items-center justify-center px-12">
 					<AnimatedTextWord
 						text={title}
-						className="text-neutral-100 text-[2.5rem] mb-8"
+						className="jura text-[2.5rem] mb-8 text-neutral-200"
 					/>
 
 					<div className="mb-8 w-full">
 						<AnimatedTextWord
 							text="Set Timer (minutes):"
-							className="block mx-auto text-center mb-4 text-[1.25rem] text-neutral-100"
+							className="block mx-auto text-center mb-4 text-[1.25rem] text-neutral-200"
 						/>
 						<select
 							id="timer"
 							value={timerMinutes}
-							className="w-full bg-zinc-600 border-zinc-700 text-neutral-200 font-semibold border-[2px] rounded-full px-6 py-3 text-[1rem]"
+							className="w-full bg-yellow-100 border-yellow-200 border-[2px] rounded-full px-6 py-3 text-[1rem]"
 							onChange={(e) => setTimerMinutes(parseInt(e.target.value))}
 						>
 							<option value={0}>No Timer</option>
@@ -195,20 +226,42 @@ const Quiz = ({
 
 	if (isSubmitted) {
 		return (
-			<div className="w-[100vw] h-screen flex items-center justify-center">
-				<div className="w-[50vw] min-h-[60vh] bg-zinc-800  mx-auto rounded-[1rem] flex flex-col items-center justify-center px-12">
-					<h2 className="text-[1.5rem] mb-4 text-neutral-200">
-						Quiz Completed!
-					</h2>
-					<p className="text-[1.2rem] text-neutral-200">
+			<div
+				className={`w-[100vw] min-h-screen flex items-center justify-center ${
+					showAnswers ? "pt-[10vh] pb-[5vh]" : ""
+				}`}
+			>
+				<div className="w-[70vw] min-h-[60vh] max-h-[80vh] overflow-auto bg-zinc-800 mx-auto rounded-[1rem] flex flex-col items-center justify-center px-12">
+					<h2 className="text-[1.5rem] mb-4">Quiz Completed!</h2>
+					<p className="text-[1.2rem]">
 						Your score: {score}/{questions.length}
 					</p>
-					<button
-						onClick={handleRestartQuiz}
-						className="w-full bg-yellow-200 hover:bg-yellow-300/75 rounded-full py-3 text-[1.1rem] mt-12"
-					>
-						Restart
-					</button>
+					{showAnswers && (
+						<div className="w-full mt-4 flex flex-col items-start justify-start pt-[60vh]">
+							{questions.map((question, index) => (
+								<QuestionResult
+									key={index}
+									question={question.question}
+									userAnswer={selectedAnswers[index]}
+									correctAnswer={question.answer}
+								/>
+							))}
+						</div>
+					)}
+					<div className="w-full flex justify-between gap-4 mt-4 mb-8">
+						<button
+							onClick={() => setShowAnswers(!showAnswers)}
+							className="w-full bg-yellow-200 hover:bg-yellow-300/75 rounded-full py-3 text-[1.1rem]"
+						>
+							{showAnswers ? "Hide Answers" : "View Answers"}
+						</button>
+						<button
+							onClick={handleRestartQuiz}
+							className="w-full bg-yellow-200 hover:bg-yellow-300/75 rounded-full py-3 text-[1.1rem]"
+						>
+							Restart
+						</button>
+					</div>
 				</div>
 			</div>
 		);
@@ -216,12 +269,12 @@ const Quiz = ({
 
 	return (
 		<div className="w-[100vw] h-screen flex items-center justify-center">
-			<div className="w-[50vw] min-h-[40vh] bg-zinc-800  mx-auto rounded-[1rem] flex flex-col">
+			<div className="w-[50vw] min-h-[40vh] bg-zinc-800 mx-auto rounded-[1rem] flex flex-col">
 				<div className="w-[90%] mx-auto flex items-center justify-center gap-4 mt-8">
 					<Progress
 						value={((currentQuestionIndex + 1) / questions.length) * 100}
 					/>
-					<p className="flex items-center justify-center">{`${
+					<p className="flex items-center justify-center text-neutral-100">{`${
 						currentQuestionIndex + 1
 					}/${questions.length}`}</p>
 				</div>
@@ -236,7 +289,12 @@ const Quiz = ({
 					</div>
 				)}
 				<h2 className="w-[90%] jura mx-auto mt-6 text-[1.3rem] pb-6 border-b-[1px] border-neutral-200">
-					<motion.div variants={animations} initial="fadeIn" animate={controls}>
+					<motion.div
+						variants={animations}
+						initial="fadeIn"
+						animate={controls}
+						className="text-neutral-200"
+					>
 						{currentQuestion.questionText}
 					</motion.div>
 				</h2>
@@ -246,7 +304,7 @@ const Quiz = ({
 						className="my-6 mb-12"
 						value={selectedAnswers[currentQuestionIndex] || ""}
 					>
-						{currentQuestion.answerChoices.map((choice: any, index: any) => (
+						{currentQuestion.choices.map((choice, index) => (
 							<motion.div
 								key={index}
 								variants={animations}
@@ -255,7 +313,10 @@ const Quiz = ({
 								className="flex space-x-3 items-center justify-start"
 							>
 								<RadioGroupItem value={choice} id={choice} className="" />
-								<Label htmlFor={choice} className="jura text-[1.25rem] my-2">
+								<Label
+									htmlFor={choice}
+									className="jura text-[1.25rem] my-2 text-neutral-200"
+								>
 									{choice}
 								</Label>
 							</motion.div>
@@ -293,4 +354,4 @@ const Quiz = ({
 	);
 };
 
-export default Quiz;
+export default TakeQuiz2;

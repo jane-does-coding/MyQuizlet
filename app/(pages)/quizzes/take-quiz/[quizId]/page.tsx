@@ -1,7 +1,7 @@
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import getQuizById from "@/app/actions/getQuizById";
-import Quiz from "@/app/components/Pages/Quiz";
 import TakeQuiz from "@/app/components/Pages/TakeQuiz";
+import TakeQuiz2 from "@/app/components/Pages/TakeQuiz2";
 import React from "react";
 
 const page = async (props: any) => {
@@ -15,7 +15,9 @@ const page = async (props: any) => {
 
 	return (
 		<div>
-			<TakeQuiz questions={quiz.questions} title={quiz.title} />
+			{/* 			<TakeQuiz questions={quiz.questions} title={quiz.title} />
+			 */}{" "}
+			<TakeQuiz2 questions={quiz.questions} title={quiz.title} />
 		</div>
 	);
 };
