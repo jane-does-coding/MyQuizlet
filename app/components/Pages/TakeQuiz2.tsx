@@ -214,7 +214,7 @@ const TakeQuiz2 = ({
 						</select>
 					</div>
 					<button
-						className="w-full bg-yellow-200 hover:bg-yellow-300/75 rounded-full py-3 text-[1.1rem] mt-4"
+						className="w-full bg-yellow-300 hover:bg-yellow-300/75 rounded-full py-3 text-[1.1rem] mt-4"
 						onClick={handleStartQuiz}
 					>
 						Start Quiz
@@ -231,17 +231,19 @@ const TakeQuiz2 = ({
 					showAnswers ? "pt-[10vh] pb-[5vh]" : ""
 				}`}
 			>
-				<div className="w-[70vw] min-h-[60vh] max-h-[80vh] overflow-auto bg-zinc-800 mx-auto rounded-[1rem] flex flex-col items-center justify-center px-12">
-					<h2 className="text-[1.5rem] mb-4">Quiz Completed!</h2>
-					<p className="text-[1.2rem]">
+				<div className="w-[60vw] min-h-[60vh] overflow-auto bg-zinc-800 mx-auto rounded-[1rem] flex flex-col items-center justify-center px-12">
+					<h2 className="text-[1.5rem] mb-4 text-neutral-200 mt-6">
+						Quiz Completed!
+					</h2>
+					<p className="text-[1.35rem] text-neutral-200">
 						Your score: {score}/{questions.length}
 					</p>
 					{showAnswers && (
-						<div className="w-full mt-4 flex flex-col items-start justify-start pt-[60vh]">
+						<div className="w-full mt-4 flex flex-col items-start justify-start">
 							{questions.map((question, index) => (
 								<QuestionResult
 									key={index}
-									question={question.question}
+									question={question.questionText}
 									userAnswer={selectedAnswers[index]}
 									correctAnswer={question.answer}
 								/>
@@ -251,13 +253,13 @@ const TakeQuiz2 = ({
 					<div className="w-full flex justify-between gap-4 mt-4 mb-8">
 						<button
 							onClick={() => setShowAnswers(!showAnswers)}
-							className="w-full bg-yellow-200 hover:bg-yellow-300/75 rounded-full py-3 text-[1.1rem]"
+							className="w-full bg-yellow-300 hover:bg-yellow-300/75 rounded-full py-3 text-[1.1rem]"
 						>
 							{showAnswers ? "Hide Answers" : "View Answers"}
 						</button>
 						<button
 							onClick={handleRestartQuiz}
-							className="w-full bg-yellow-200 hover:bg-yellow-300/75 rounded-full py-3 text-[1.1rem]"
+							className="w-full bg-yellow-300 hover:bg-yellow-300/75 rounded-full py-3 text-[1.1rem]"
 						>
 							Restart
 						</button>
@@ -323,11 +325,11 @@ const TakeQuiz2 = ({
 						))}
 					</RadioGroup>
 				</div>
-				<div className="w-[90%] mx-auto mt-auto mb-4 flex justify-between gap-4">
+				<div className="w-[90%] mx-auto mt-auto mb-6 flex justify-between gap-4">
 					<button
 						onClick={handlePrevQuestion}
 						disabled={currentQuestionIndex === 0}
-						className="w-full bg-yellow-200 hover:bg-yellow-300/75 rounded-full py-3 text-[1.1rem] flex items-center justify-center gap-2"
+						className="w-full bg-yellow-300 hover:bg-yellow-300/75 rounded-full py-3 text-[1.1rem] flex items-center justify-center gap-2"
 					>
 						<IoIosArrowBack size={24} />
 						Previous
@@ -335,7 +337,7 @@ const TakeQuiz2 = ({
 					{currentQuestionIndex < questions.length - 1 ? (
 						<button
 							onClick={handleNextQuestion}
-							className="w-full bg-yellow-200 hover:bg-yellow-300/75 rounded-full py-3 text-[1.1rem] flex items-center justify-center gap-2"
+							className="w-full bg-yellow-300 hover:bg-yellow-300/75 rounded-full py-3 text-[1.1rem] flex items-center justify-center gap-2"
 						>
 							Next
 							<IoIosArrowForward size={24} />
@@ -343,7 +345,7 @@ const TakeQuiz2 = ({
 					) : (
 						<button
 							onClick={handleSubmit}
-							className="w-full bg-yellow-200 hover:bg-yellow-300/75 rounded-full py-3 text-[1.1rem]"
+							className="w-full bg-yellow-300 hover:bg-yellow-300/75 rounded-full py-3 text-[1.1rem]"
 						>
 							Submit
 						</button>
