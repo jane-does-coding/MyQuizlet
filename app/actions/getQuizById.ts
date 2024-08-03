@@ -20,6 +20,7 @@ export default async function getQuizById(params: IParams) {
 			},
 			include: {
 				questions: true,
+				creator: true,
 			},
 		});
 

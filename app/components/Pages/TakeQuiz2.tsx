@@ -118,7 +118,7 @@ const TakeQuiz2 = ({
 	const handleSubmit = () => {
 		let calculatedScore = 0;
 		selectedAnswers.forEach((answer, index) => {
-			if (answer === questions[index].correctAnswer) {
+			if (answer === questions[index].answer) {
 				calculatedScore += 1;
 			}
 		});

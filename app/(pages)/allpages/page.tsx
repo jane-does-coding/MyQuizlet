@@ -7,6 +7,9 @@ const page = () => {
 			<a href="/login">login</a>
 			<a href="/profile">profile</a>
 			<a href="/update-profile">update profile</a>
+			<a href="/update-profile">update profile</a>
+			<a href="/update-profile">update profile</a>
+			<a href="/update-profile">update profile</a>
 		</div>
 	);
 };

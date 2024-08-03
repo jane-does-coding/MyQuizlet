@@ -12,6 +12,7 @@ export default async function getQuizzes() {
 		const quizzes = await prisma.quiz.findMany({
 			include: {
 				questions: true,
+				creator: true,
 			},
 		});
 

@@ -16,7 +16,7 @@ const GridCard = ({ card }: any) => {
 					className="w-[25px] h-[25px] object-cover rounded-full"
 					alt=""
 				/>
-				<h2 className="text-neutral-300 text-sm">{card.author}</h2>
+				<h2 className="text-neutral-300 text-sm">{card.creator.name}</h2>
 			</div>
 		</a>
 	);
