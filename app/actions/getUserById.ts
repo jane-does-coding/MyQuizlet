@@ -1,31 +1,29 @@
-import { getServerSession } from "next-auth/next";
-
-import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import prisma from "@/app/libs/prismadb";
+import getCurrentUser from "./getCurrentUser";
 
-export async function getSession() {
-	return await getServerSession(authOptions);
+interface IParams {
+	quizId: string;
 }
 
-export default async function getCurrentUser() {
+export default async function getUserById(params: IParams) {
 	try {
-		const session = await getSession();
-
-		if (!session?.user?.email) {
-			return null;
-		}
-
-		const currentUser = await prisma.user.findUnique({
+		const user = await prisma.quiz.findMany({
 			where: {
-				email: session.user.email as string,
+				id: params.quizId,
+			},
+			include: {
+				questions: true,
+				creator: true,
 			},
 		});
 
-		if (!currentUser) {
+		console.log(user);
+
+		if (!user) {
 			return null;
 		}
 
-		return currentUser;
+		return user;
 	} catch (err: any) {
 		return null;
 	}
