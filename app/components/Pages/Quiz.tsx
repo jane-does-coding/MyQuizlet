@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import GridCard from "../GridCard";
+import { useRouter } from "next/navigation";
 
 const Quiz = ({ quiz, quizzes }: any) => {
 	const [flippedStates, setFlippedStates] = useState(
@@ -27,6 +28,8 @@ const Quiz = ({ quiz, quizzes }: any) => {
 		);
 	};
 
+	const router = useRouter();
+
 	return (
 		<div className="flex">
 			<div className="w-[65vw] pl-[6rem] pt-[6rem]">
@@ -35,7 +38,7 @@ const Quiz = ({ quiz, quizzes }: any) => {
 				</h1>
 				<div className=" flex gap-4 items-center justify-center w-[100%] mx-auto mb-6">
 					<button
-						type="submit"
+						onClick={() => router.push(`/quizzes/take-quiz/${quiz.id}`)}
 						className={
 							"transition rounded-md px-4 py-2 bg-yellow-300 hover:bg-yellow-300/75 text-neutral-900 w-full"
 						}
@@ -43,7 +46,7 @@ const Quiz = ({ quiz, quizzes }: any) => {
 						Learn
 					</button>
 					<button
-						type="submit"
+						onClick={() => router.push(`/quizzes/take-quiz/${quiz.id}`)}
 						className={
 							"transition rounded-md px-4 py-2 bg-yellow-300 hover:bg-yellow-300/75 text-neutral-900 w-full"
 						}
@@ -51,7 +54,7 @@ const Quiz = ({ quiz, quizzes }: any) => {
 						Quiz
 					</button>
 					<button
-						type="submit"
+						onClick={() => router.push(`/quizzes/take-quiz/${quiz.id}`)}
 						className={
 							"transition rounded-md px-4 py-2 bg-yellow-300 hover:bg-yellow-300/75 text-neutral-900 w-full"
 						}
