@@ -7,6 +7,8 @@ import { useRouter } from "next/navigation";
 const Profile = ({ currentUser }: any) => {
 	const router = useRouter();
 
+	console.log(currentUser);
+
 	return (
 		<div className="w-screen h-screen flex items-center justify-center">
 			<div className="w-full md:w-[50vw] h-[60vh] bg-zinc-800 rounded-xl">

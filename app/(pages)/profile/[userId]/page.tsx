@@ -9,8 +9,9 @@ const page = async (props: any) => {
 
 	const currentUser = await getCurrentUser();
 	const user = await getUserById(params);
-	console.log(user, currentUser);
-	return (
+
+	/* 	console.log(user);
+	 */ return (
 		<div>
 			{/*   SHOW PROFILE PAGE */}
 			<Profile currentUser={user} />

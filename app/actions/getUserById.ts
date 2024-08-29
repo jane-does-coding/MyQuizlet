@@ -2,23 +2,22 @@ import prisma from "@/app/libs/prismadb";
 import getCurrentUser from "./getCurrentUser";
 
 interface IParams {
-	quizId: string;
+	userId: string;
 }
 
 export default async function getUserById(params: IParams) {
 	try {
-		const user = await prisma.quiz.findMany({
+		const user = await prisma.user.findUnique({
 			where: {
-				id: params.quizId,
+				id: params.userId,
 			},
 			include: {
-				questions: true,
-				creator: true,
+				quizzes: true,
 			},
 		});
 
-		console.log(user);
-
+		/* 		console.log(user);
+		 */
 		if (!user) {
 			return null;
 		}

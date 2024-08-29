@@ -139,8 +139,8 @@ const Quiz = ({ quiz, quizzes }: any) => {
 				</table>
 			</div>
 			<div className="w-[35vw] ml-[6rem] bg-zinc-900 h-screen flex flex-col py-6 pt-12 gap-4 pr-8">
-				{quizzes.map((card: any) => (
-					<GridCard card={card} />
+				{quizzes.map((card: any, i: any) => (
+					<GridCard card={card} key={i} />
 				))}
 			</div>
 		</div>
