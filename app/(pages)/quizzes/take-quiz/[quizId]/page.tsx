@@ -1,6 +1,5 @@
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import getQuizById from "@/app/actions/getQuizById";
-import TakeQuiz from "@/app/components/Pages/TakeQuiz";
 import TakeQuiz2 from "@/app/components/Pages/TakeQuiz2";
 import React from "react";
 
